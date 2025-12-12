@@ -1,0 +1,82 @@
+# =====================================================
+#  FULL GENAI TRAINING ENVIRONMENT (EXTENDED)
+#  OpenAI + LangChain + LangGraph + Vector DB + RAG + MLOps + Copilot
+#  with Agents, Function Calling, Document/Audio/Video Processing
+#  and Observability / Tracing / Evaluation Stack
+# =====================================================
+
+# ---- Core Python + Jupyter Environment ----
+
+pandas
+numpy
+
+python-dotenv
+requests
+tqdm
+pydantic
+rich
+
+# ---- LLMs / APIs / Agents ----
+openai
+langchain-openai
+pydantic-ai
+tenacity
+
+# ---- LangChain / LangGraph Stack ----
+langchain
+langchain-core
+langchain-community
+langchain-experimental
+langgraph
+
+
+# ---- Vector Databases ----
+
+
+# ---- Embeddings / RAG ----
+
+
+# ---- Prompt Engineering / Evaluation ----
+
+# ---- MLOps / Orchestration ----
+
+pydantic
+fastapi
+uvicorn
+pydantic-settings
+
+# ---- Data Handling / Pipelines ----
+pyyaml
+jsonschema
+sqlalchemy
+
+# ---- Tools / Agents ----
+langchain-tools
+duckduckgo-search
+serpapi
+wikipedia
+arxiv
+google-search-results
+
+# ---- Document Reading / Parsing ----
+
+
+# ---- Audio / Video / Speech ----
+# ---- MVC / Web Layer ----
+
+jinja2
+python-multipart
+
+
+
+
+# ---- LLM Observability & Tracing ----
+
+langchain-cli
+
+
+
+# ---- Testing / Dev ----
+pytest
+pytest-asyncio
+
