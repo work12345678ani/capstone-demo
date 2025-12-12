@@ -14,5 +14,5 @@ class questions(BaseModel):
 async def get_questions(data: questions):
     ques = data.question
     res = agent.invoke({"messages": [HumanMessage(content=ques)]})
-    return res['messages'][1].content[3]['text']
+    return res['messages'][1].content
 
