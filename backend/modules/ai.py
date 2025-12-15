@@ -1,5 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
 from langchain_community.retrievers import WikipediaRetriever
@@ -13,7 +13,8 @@ from prompts.background_search import BACKGROUND_SEARCH_PROMPT
 from prompts.information_gatherer import INFOMRATION_GATHERER_PROMPT
 from prompts.question_generator import QUESTION_GENERATOR_PROMPT
 from prompts.validator import VALIDATOR_PROMPT
-from .models import ResponseState, ValidatorOutputFormat
+from prompts.conversation_agent import CONVERSATION_PROMPT
+from .models import ResponseState, ValidatorOutputFormat, ConversationState
 from newsapi import NewsApiClient
 from datetime import date
 from braintrust import init_logger, traced
@@ -105,7 +106,7 @@ checkpointer = InMemorySaver()
 agent = workflow.compile(checkpointer=checkpointer)
 
 @traced(name="Journalist Question Generator")
-def invoke_graph(thread_id: str, resume_val: dict, name: str = "", one_liner: str = ""):
+def invoke_researcher(thread_id: str, resume_val: dict, name: str = "", one_liner: str = ""):
     config = {"configurable": {"thread_id": thread_id}}
     if not resume_val:
         res = agent.invoke({"name": name, "one_liner": one_liner, "issues": ""}, config=config)
@@ -113,17 +114,29 @@ def invoke_graph(thread_id: str, resume_val: dict, name: str = "", one_liner: st
         res = agent.invoke(Command(resume=resume_val), config=config)
     return res
 
-def test_invoke():
-    r = invoke_graph(thread_id=123, name="Donald Trump", one_liner="His recent policy on immigration and others", resume_val={})
-    # while "__interrupt__" not in r:
-    while r.get("__interrupt__"):
-        print(r["__interrupt__"])
-        val = input("Do you approve of this?")
-        if val != "True":
-            reason = input("Enter reason:")
-            ans = False
-        else:
-            ans = True
-            reason = ""
-        r = invoke_graph(thread_id=123, name="Donald Trump", one_liner="His recent policy on immigration and others", resume_val={"isValid": ans, "issues": reason})
-    print(r)
+
+"""==========CONVERSATION AGENT=========="""
+
+
+
+def conversation_agent(state: ConversationState):
+    model = ChatOpenAI(model="gpt-5-mini", api_key=settings.OPENAI_API_KEY)
+    prompt = ChatPromptTemplate.from_template(CONVERSATION_PROMPT).invoke({}).to_string()
+    full_msgs = [SystemMessage(content=prompt)] + state["messages"]
+    res = model.invoke(full_msgs)
+    return {"messages": AIMessage(content=res.content)}
+
+ConversationGraph = StateGraph(ConversationState)
+
+ConversationGraph.add_node("conversation_agent", conversation_agent)
+ConversationGraph.set_entry_point("conversation_agent")
+ConversationGraph.add_edge("conversation_agent", END)
+
+convo_checkpointer = InMemorySaver()
+convo_agent = ConversationGraph.compile(checkpointer=convo_checkpointer)
+
+@traced(name="Conversation Agent")
+def invoke_conversation(thread_id: str, message: str):
+    config = {"configurable": {"thread_id": thread_id}}
+    res = convo_agent.invoke({"messages": [HumanMessage(content=message)]}, config=config)
+    return res
