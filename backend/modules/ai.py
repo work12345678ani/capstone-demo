@@ -14,7 +14,7 @@ from prompts.information_gatherer import INFOMRATION_GATHERER_PROMPT
 from prompts.question_generator import QUESTION_GENERATOR_PROMPT
 from prompts.validator import VALIDATOR_PROMPT
 from prompts.conversation_agent import CONVERSATION_PROMPT
-from .models import ResponseState, ValidatorOutputFormat, ConversationState
+from .res_models import ResponseState, ValidatorOutputFormat, ConversationState
 from newsapi import NewsApiClient
 from datetime import date
 from braintrust import init_logger, traced
