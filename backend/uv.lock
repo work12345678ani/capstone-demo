@@ -201,6 +201,8 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "arxiv" },
+    { name = "braintrust" },
+    { name = "braintrust-langchain" },
     { name = "duckduckgo-search" },
     { name = "fastapi", extra = ["standard"] },
     { name = "google-search-results" },
@@ -214,6 +216,7 @@ dependencies = [
     { name = "langchain-openai" },
     { name = "langchain-tools" },
     { name = "langgraph" },
+    { name = "newsapi-python" },
     { name = "numpy" },
     { name = "openai" },
     { name = "pandas" },
@@ -238,6 +241,8 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "arxiv", specifier = ">=2.3.1" },
+    { name = "braintrust", specifier = ">=0.3.13" },
+    { name = "braintrust-langchain", specifier = ">=0.1.5" },
     { name = "duckduckgo-search", specifier = ">=8.1.1" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.124.2" },
     { name = "google-search-results", specifier = ">=2.4.2" },
@@ -251,6 +256,7 @@ requires-dist = [
     { name = "langchain-openai", specifier = ">=1.1.2" },
     { name = "langchain-tools", specifier = ">=0.1.34" },
     { name = "langgraph", specifier = ">=1.0.4" },
+    { name = "newsapi-python", specifier = ">=0.2.7" },
     { name = "numpy", specifier = ">=2.3.5" },
     { name = "openai", specifier = ">=2.11.0" },
     { name = "pandas", specifier = ">=2.3.3" },
@@ -320,6 +326,40 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/3a/ea/4be7a4a640d599b5691c7cf27e125155d7d3643ecbe37e32941f412e3de5/botocore-1.42.8.tar.gz", hash = "sha256:4921aa454f82fed0880214eab21126c98a35fe31ede952693356f9c85ce3574b", size = 14861038, upload-time = "2025-12-11T21:54:04.031Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/1c/24/a4301564a979368d6f3644f47acc921450b5524b8846e827237d98b04746/botocore-1.42.8-py3-none-any.whl", hash = "sha256:4cb89c74dd9083d16e45868749b999265a91309b2499907c84adeffa0a8df89b", size = 14534173, upload-time = "2025-12-11T21:54:01.143Z" },
+]
+
+[[package]]
+name = "braintrust"
+version = "0.3.13"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "chevron" },
+    { name = "exceptiongroup" },
+    { name = "gitpython" },
+    { name = "python-dotenv" },
+    { name = "python-slugify" },
+    { name = "requests" },
+    { name = "sseclient-py" },
+    { name = "tqdm" },
+    { name = "typing-extensions" },
+    { name = "wrapt" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d4/66/af520dfc7d770277adc6fef1309a10602ae4ca6b146d4c9ba9332b2a5002/braintrust-0.3.13.tar.gz", hash = "sha256:b9686f5cd394ce68c07edc14d0eeee3d84899793b340835380f88e66da7cbc73", size = 248298, upload-time = "2025-12-10T22:43:31.942Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/36/7f/6cd9ea59969aaf321e5b39f55849876e5c98c1575b59c2f55a889214c19e/braintrust-0.3.13-py3-none-any.whl", hash = "sha256:25acf1bddbcfd474975ce97cde7ef64dd4c14c92621e93c160b225c8fd22dbc3", size = 293692, upload-time = "2025-12-10T22:43:30.163Z" },
+]
+
+[[package]]
+name = "braintrust-langchain"
+version = "0.1.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "braintrust" },
+    { name = "langchain" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b6/a5/f99508e1fc2860c12ad76ebe928a6f0e587783772e965f333cebe4dcc334/braintrust_langchain-0.1.5.tar.gz", hash = "sha256:f4aa8e4633ad12c0dcd8c35fcb686adaf3e1803030afda721cccabafbe450bd0", size = 16034, upload-time = "2025-11-10T17:51:23.476Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2b/09/4b1d3d91f35ba4973f03014dd9b03e81f564553bc626a037c3d81fe63290/braintrust_langchain-0.1.5-py3-none-any.whl", hash = "sha256:fad93ea2ff4a3292095c2594aca314c8157f2af3ee7aa50ccccb0801ff6af8a4", size = 17655, upload-time = "2025-11-10T17:51:22.661Z" },
 ]
 
 [[package]]
@@ -424,6 +464,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/4b/51/8ade005e5ca5b0d80fb4aff72a3775b325bdc3d27408c8113811a7cbe640/charset_normalizer-3.4.4-cp314-cp314-win_amd64.whl", hash = "sha256:8a6562c3700cce886c5be75ade4a5db4214fda19fede41d9792d100288d8f94c", size = 107104, upload-time = "2025-10-14T04:41:51.051Z" },
     { url = "https://files.pythonhosted.org/packages/da/5f/6b8f83a55bb8278772c5ae54a577f3099025f9ade59d0136ac24a0df4bde/charset_normalizer-3.4.4-cp314-cp314-win_arm64.whl", hash = "sha256:de00632ca48df9daf77a2c65a484531649261ec9f25489917f09e455cb09ddb2", size = 100743, upload-time = "2025-10-14T04:41:52.122Z" },
     { url = "https://files.pythonhosted.org/packages/0a/4c/925909008ed5a988ccbb72dcc897407e5d6d3bd72410d69e051fc0c14647/charset_normalizer-3.4.4-py3-none-any.whl", hash = "sha256:7a32c560861a02ff789ad905a2fe94e3f840803362c84fecf1851cb4cf3dc37f", size = 53402, upload-time = "2025-10-14T04:42:31.76Z" },
+]
+
+[[package]]
+name = "chevron"
+version = "0.14.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/15/1f/ca74b65b19798895d63a6e92874162f44233467c9e7c1ed8afd19016ebe9/chevron-0.14.0.tar.gz", hash = "sha256:87613aafdf6d77b6a90ff073165a61ae5086e21ad49057aa0e53681601800ebf", size = 11440, upload-time = "2021-01-02T22:47:59.233Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/52/93/342cc62a70ab727e093ed98e02a725d85b746345f05d2b5e5034649f4ec8/chevron-0.14.0-py3-none-any.whl", hash = "sha256:fbf996a709f8da2e745ef763f482ce2d311aa817d287593a5b990d6d6e4f0443", size = 11595, upload-time = "2021-01-02T22:47:57.847Z" },
 ]
 
 [[package]]
@@ -2078,6 +2127,18 @@ wheels = [
 ]
 
 [[package]]
+name = "newsapi-python"
+version = "0.2.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f8/4b/12fb9495211fc5a6d3a96968759c1a48444124a1654aaf65d0de80b46794/newsapi-python-0.2.7.tar.gz", hash = "sha256:a4b66d5dd9892198cdaa476f7542f2625cdd218e5e3121c8f880b2ace717a3c2", size = 7485, upload-time = "2023-03-02T13:15:35.89Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/74/47/e3b099102f0c826d37841d2266e19f1568dcf58ba86e4c6948e2a124f91d/newsapi_python-0.2.7-py2.py3-none-any.whl", hash = "sha256:11d34013a24d92ca7b7cbdac84ed2d504862b1e22467bc2a9a6913a70962318e", size = 7942, upload-time = "2023-03-02T13:15:34.475Z" },
+]
+
+[[package]]
 name = "nexus-rpc"
 version = "1.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2984,6 +3045,18 @@ wheels = [
 ]
 
 [[package]]
+name = "python-slugify"
+version = "8.0.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "text-unidecode" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/87/c7/5e1547c44e31da50a460df93af11a535ace568ef89d7a811069ead340c4a/python-slugify-8.0.4.tar.gz", hash = "sha256:59202371d1d05b54a9e7720c5e038f928f45daaffe41dd10822f3907b937c856", size = 10921, upload-time = "2024-02-08T18:32:45.488Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a4/62/02da182e544a51a5c3ccf4b03ab79df279f9c60c5e82d5e8bec7ca26ac11/python_slugify-8.0.4-py2.py3-none-any.whl", hash = "sha256:276540b79961052b66b7d116620b36518847f52d5fd9e3a70164fc8c50faa6b8", size = 10051, upload-time = "2024-02-08T18:32:43.911Z" },
+]
+
+[[package]]
 name = "pytz"
 version = "2025.2"
 source = { registry = "https://pypi.org/simple" }
@@ -3489,6 +3562,15 @@ wheels = [
 ]
 
 [[package]]
+name = "sseclient-py"
+version = "1.8.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e8/ed/3df5ab8bb0c12f86c28d0cadb11ed1de44a92ed35ce7ff4fd5518a809325/sseclient-py-1.8.0.tar.gz", hash = "sha256:c547c5c1a7633230a38dc599a21a2dc638f9b5c297286b48b46b935c71fac3e8", size = 7791, upload-time = "2023-09-01T19:39:20.45Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/49/58/97655efdfeb5b4eeab85b1fc5d3fa1023661246c2ab2a26ea8e47402d4f2/sseclient_py-1.8.0-py2.py3-none-any.whl", hash = "sha256:4ecca6dc0b9f963f8384e9d7fd529bf93dd7d708144c4fb5da0e0a1a926fee83", size = 8828, upload-time = "2023-09-01T19:39:17.627Z" },
+]
+
+[[package]]
 name = "starlette"
 version = "0.50.0"
 source = { registry = "https://pypi.org/simple" }
@@ -3526,6 +3608,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/0a/d4/2b0cd0fe285e14b36db076e78c93766ff1d529d70408bd1d2a5a84f1d929/tenacity-9.1.2.tar.gz", hash = "sha256:1169d376c297e7de388d18b4481760d478b0e99a777cad3a9c86e556f4b697cb", size = 48036, upload-time = "2025-04-02T08:25:09.966Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e5/30/643397144bfbfec6f6ef821f36f33e57d35946c44a2352d3c9f0ae847619/tenacity-9.1.2-py3-none-any.whl", hash = "sha256:f77bf36710d8b73a50b2dd155c97b870017ad21afe6ab300326b0371b3b05138", size = 28248, upload-time = "2025-04-02T08:25:07.678Z" },
+]
+
+[[package]]
+name = "text-unidecode"
+version = "1.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ab/e2/e9a00f0ccb71718418230718b3d900e71a5d16e701a3dae079a21e9cd8f8/text-unidecode-1.3.tar.gz", hash = "sha256:bad6603bb14d279193107714b288be206cac565dfa49aa5b105294dd5c4aab93", size = 76885, upload-time = "2019-08-30T21:36:45.405Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a6/a5/c0b6468d3824fe3fde30dbb5e1f687b291608f9473681bbf7dabbf5a87d7/text_unidecode-1.3-py2.py3-none-any.whl", hash = "sha256:1311f10e8b895935241623731c2ba64f4c455287888b18189350b67134a822e8", size = 78154, upload-time = "2019-08-30T21:37:03.543Z" },
 ]
 
 [[package]]

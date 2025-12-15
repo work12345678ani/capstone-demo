@@ -39,4 +39,11 @@ General guidelines:
 - Avoid speculation and clearly distinguish verified information from assumptions.
 - Handle ambiguous or common names carefully and transparently.
 - Optimize for accuracy and clarity over verbosity.
+
+Here's the name of the Person: {person_name}
+Here's the one-liner about the person to narrow them down: {one_liner}
+
+Additional information about the person to narrow them down even more: {additional_info}
+
+
 """
