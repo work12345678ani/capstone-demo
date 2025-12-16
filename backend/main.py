@@ -43,7 +43,7 @@ def register(data: Annotated[RegisterIn, Form()], db: DBSession = Depends(get_db
 
 
 @app.post("/api/login")
-def login(data: Annotated[LoginIn, Form()], response: Response, db: DBSession = Depends(get_db)):
+def login(data: LoginIn, response: Response, db: DBSession = Depends(get_db)):
     user = db.query(User).filter(User.email == data.email).first()
     if not user or not verify_password(data.password, user.password_hash):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
@@ -72,7 +72,7 @@ async def get_questions(data: questions, current_user: User = Depends(get_curren
     desc = data.desc
     res = invoke_researcher(thread_id=thread_id, name=name, one_liner=desc, resume_val={})
     print(res["__interrupt__"])
-    return JSONResponse(status_code=200, content={
+    return JSONResponse(status_code=status.HTTP_200_OK, content={
         "interrupt": res["__interrupt__"][0].value, 
         "thread_id": str(thread_id)
     })
@@ -88,11 +88,12 @@ async def validate(data: validationRoute, current_user: User = Depends(get_curre
         "issues": additional_info
     })
 
-    return res['question_generator']
+    return JSONResponse(status_code=status.HTTP_200_OK, content={"response": res["question_generator"]})
 
 @app.post("/api/conversation")
 async def conversation(data: conversationRoute, current_user: User = Depends(get_current_user)):
     thread_id = data.thread_id
     message = data.message
     res = invoke_conversation(thread_id=thread_id, message=message)
-    return res
+    print(res)
+    return JSONResponse(status_code=status.HTTP_200_OK, content={"response": res['messages'][-1].content})

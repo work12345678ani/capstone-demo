@@ -45,5 +45,7 @@ Here's the one-liner about the person to narrow them down: {one_liner}
 
 Additional information about the person to narrow them down even more: {additional_info}
 
+Return in no less than 200 words.
+
 
 """
