@@ -7,7 +7,7 @@ Journalists often work under tight deadlines and need to quickly gather accurate
 
 ## Approach Used
 
-The approach I used to solve this problem is to create a multi-agent solution comprising of 4 different agents with each performing a particular task. They're as follows:
+The approach I used to solve this problem is to create a multi-agent solution comprising 4 different agents with each performing a particular task. They're as follows:
 - Validator Agent
 - Background Search Agent
 - Information Gatherer Agent
@@ -17,7 +17,7 @@ The validator agent will first receive the name of the person that's going to be
 
 The Background Search agent will search about the person on search-engines as well as Wikipedia. It gathers all publicly available background information and generates a comprehensive, detailed history of that particular person
 
-The Information Gatherer agent will search the person and the topic provided on the web, Wikipedia and various news sources and compiles a comprehensive list of all recent and historical information available related to the person and the particular topic. It then returns each finding along with the source and an link to it.
+The Information Gatherer agent will search the person and the topic provided on the web, Wikipedia and various news sources and compiles a comprehensive list of all recent and historical information available related to the person and the particular topic. It then returns each finding along with the source and a link to it.
 
 The Question Generator agent will use the information from both the Background Search Agent and the Information Gatherer agent to make a comprehensive list of questions that the interviewer should be asking to the interviewee. The generated questions will contain a particular claim, as well as the source from where the claim was sourced and the trustworthiness of the source so that the journalist can make an informed decision on how or whether to ask the question. Trustworthiness is based on the sources' reputation.
 
@@ -63,7 +63,7 @@ PORT=8001
 ./build.sh
 ./startup.sh
 ```
-If you are on windows, use `git bash` to execute them or run the following commands manually.
+If you are on Windows, use `git bash` to execute them or run the following commands manually.
 
 ```pwsh
 cd frontend
@@ -77,11 +77,11 @@ uvicorn main:app --host 0.0.0.0 --port 8001
 
 ### Tests
 
-Pytest scripts are provided in the `backend/tests` directory. Run them if you want to check if the routes still work.
+Pytest scripts are provided in the `backend/tests` directory.
 
 ## Thoughts
 - This project was made to get quick information and facts on a particular person and topic before interviewing them.
 - Caching was not implemented as it'd be much accurate to fetch up-to date information every time somebody runs the program. As they say, things keep evolving every minute. Accuracy is much more important than response time.
 - Multiple agents were used instead of a single agent so as to make things as accurate as possible. A single agent performs a single task it is given. 
 - In future, chat history and caching can be implemented if multiple queries were made on the same person on the same topic.
-- Similarly, ability to search paywalled sources, social media and other sources of infomration can also be added in a future version.
+- Similarly, ability to search paywalled sources, social media and other sources of information can also be added in a future version.
