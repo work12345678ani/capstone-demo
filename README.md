@@ -13,13 +13,13 @@ The approach I used to solve this problem is to create a multi-agent solution co
 - Information Gatherer Agent
 - Question Generator Agent.
 
-The validator agent will first receive the name of the person that's going to be interviewed and the topic they're going to be interviewed on. Based on the information presented, it makes a web-search to identify the person and presents the details back to the user. The user can either confirm if the person's correct or provide additional details on that person to narrow them down.
+The Validator agent will first receive the name of the person that's going to be interviewed and the topic they're going to be interviewed on. Based on the information presented, it makes a web-search to identify the person and presents the details back to the user. The user can either confirm if the person's correct or provide additional details on that person to narrow them down.
 
 The Background Search agent will search about the person on search-engines as well as Wikipedia. It gathers all publicly available background information and generates a comprehensive, detailed history of that particular person
 
 The Information Gatherer agent will search the person and the topic provided on the web, Wikipedia and various news sources and compiles a comprehensive list of all recent and historical information available related to the person and the particular topic. It then returns each finding along with the source and a link to it.
 
-The Question Generator agent will use the information from both the Background Search Agent and the Information Gatherer agent to make a comprehensive list of questions that the interviewer should be asking to the interviewee. The generated questions will contain a particular claim, as well as the source from where the claim was sourced and the trustworthiness of the source so that the journalist can make an informed decision on how or whether to ask the question. Trustworthiness is based on the sources' reputation.
+The Question Generator agent will use the information from both the Background Search agent and the Information Gatherer agent to make a comprehensive list of questions that the interviewer should be asking to the interviewee. The generated questions will contain a particular claim, as well as the source from where the claim was sourced and the trustworthiness of the source so that the journalist can make an informed decision on how or whether to ask the question. Trustworthiness is based on the sources' reputation.
 
 ## Tech Stack
 
@@ -52,9 +52,9 @@ This project was built using `Python 3.13.5` and `node v22.16.0` It is recommend
 You need to get API keys from the following sources: 
 - [OpenAI](https://platform.openai.com/)
 - [NewsAPI](https://newsapi.org/)
-- [BrainTrust](https://www.braintrust.dev/)
+- [Braintrust](https://www.braintrust.dev/)
 
-Make sure you set the appropriate API keys and the database URL in the `.env` file before proceeding. Sample `.env` is located under `backend/.env.sample`. Copy `.env.sample` to `.env` and fill in your API keys 
+Make sure you set the appropriate API keys and the database URL in the `.env` file before proceeding. Sample `.env` is located under `backend/.env.sample`. Copy `.env.sample` to `.env` and fill in your API keys.
 
 #### API Limitations
 - NewsAPI free tier: 100 requests/day
@@ -82,7 +82,7 @@ uvicorn main:app --host 0.0.0.0 --port 8001
 
 ### Tests
 
-Pytest scripts are provided in the `backend/tests` directory.
+Pytest scripts are provided in the `backend/test` directory.
 
 ## Usage
 After starting the server, navigate to `http://localhost:8001`
