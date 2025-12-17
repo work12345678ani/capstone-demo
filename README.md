@@ -40,7 +40,7 @@ The Question Generator agent will use the information from both the Background S
 - Web Search
 - Newsapi
 
-BrainTrust is used to trace LLM responses and Tool Calls.
+Braintrust is used to trace LLM responses and Tool Calls.
 ## Architecture
 
 ![Architecture diagram describing how various components interact with each other.](assets/architecture.png)
@@ -54,11 +54,16 @@ You need to get API keys from the following sources:
 - [NewsAPI](https://newsapi.org/)
 - [BrainTrust](https://www.braintrust.dev/)
 
-Make sure you set the appropriate API keys and the database URL in the `.env` file before proceeding.
+Make sure you set the appropriate API keys and the database URL in the `.env` file before proceeding. Sample `.env` is located under `backend/.env.sample`. Copy `.env.sample` to `.env` and fill in your API keys 
+
+#### API Limitations
+- NewsAPI free tier: 100 requests/day
+- OpenAI: Rate limits apply based on your plan
+
 
 The provided build scripts were designed to be used on a *nix system. If you're on a *nix system, just run the following commands:
 ```bash
-chmod +x startup.sh build.sh
+chmod +x startup.sh build.sh #only once
 PORT=8001
 ./build.sh
 ./startup.sh
@@ -78,6 +83,13 @@ uvicorn main:app --host 0.0.0.0 --port 8001
 ### Tests
 
 Pytest scripts are provided in the `backend/tests` directory.
+
+## Usage
+After starting the server, navigate to `http://localhost:8001`
+1. Enter the interviewee's name
+2. Specify the interview topic
+3. Validate the person's identity
+4. Review generated background, findings, and questions
 
 ## Thoughts
 - This project was made to get quick information and facts on a particular person and topic before interviewing them.
