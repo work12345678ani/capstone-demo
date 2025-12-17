@@ -54,7 +54,7 @@ You need to get API keys from the following sources:
 - [NewsAPI](https://newsapi.org/)
 - [Braintrust](https://www.braintrust.dev/)
 
-Make sure you set the appropriate API keys and the database URL in the `.env` file before proceeding. Sample `.env` is located under `backend/.env.sample`. Copy `.env.sample` to `.env` and fill in your API keys.
+Make sure you set the appropriate API keys and the database URL in the `.env` file before proceeding. Sample `.env` is located under `backend/.env.sample`. Rename `.env.sample` to `.env` and fill in your API keys.
 
 #### API Limitations
 - NewsAPI free tier: 100 requests/day
@@ -86,6 +86,7 @@ Pytest scripts are provided in the `backend/test` directory.
 
 ## Usage
 After starting the server, navigate to `http://localhost:8001`
+0. Register an account if you do not have one.
 1. Enter the interviewee's name
 2. Specify the interview topic
 3. Validate the person's identity
