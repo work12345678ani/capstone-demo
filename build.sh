@@ -9,8 +9,8 @@ cd "$ROOT_DIR/backend"
 
 
 if [[ -f requirements.txt ]]; then
-  python -m pip install --upgrade pip
-  python -m pip install -r requirements.txt
+  python3 -m pip install --upgrade pip
+  python3 -m pip install -r requirements.txt
 else
   echo "ERROR: backend/requirements.txt not found."
   exit 1
