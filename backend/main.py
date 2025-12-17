@@ -1,5 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, status, Form
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from modules.env import settings
 from modules.ai import invoke_researcher, invoke_conversation
 from modules.res_models import questions, validationRoute, conversationRoute, RegisterIn, LoginIn
@@ -19,13 +20,18 @@ from modules.authenticate import (
     get_current_user,
 )
 from sqlalchemy.orm import Session as DBSession
+import os
 
 
 app = FastAPI()
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
+
+app.mount("/assets", StaticFiles(directory=os.path.join(FRONTEND_DIR, "build", "client", "assets")), name="assets")
 
 @app.post("/api/register", status_code=201)
-def register(data: Annotated[RegisterIn, Form()], db: DBSession = Depends(get_db)):
+def register(data: RegisterIn, response: Response, db: DBSession = Depends(get_db)):
     if db.query(User).filter(User.email == data.email).first():
         raise HTTPException(status_code=400, detail="Email already registered")
     if db.query(User).filter(User.username == data.username).first():
@@ -39,6 +45,8 @@ def register(data: Annotated[RegisterIn, Form()], db: DBSession = Depends(get_db
     db.add(user)
     db.commit()
     db.refresh(user)
+    sid = create_session(db, user.id)
+    set_session_cookie(response, sid)
     return {"id": user.id, "email": user.email, "username": user.username}
 
 
@@ -97,3 +105,9 @@ async def conversation(data: conversationRoute, current_user: User = Depends(get
     res = invoke_conversation(thread_id=thread_id, message=message)
     print(res)
     return JSONResponse(status_code=status.HTTP_200_OK, content={"response": res['messages'][-1].content})
+
+
+@app.get("/{full_path:path}")
+async def catch_all(full_path: str):
+  indexFilePath = os.path.join(FRONTEND_DIR, "build", "client", "index.html")
+  return FileResponse(path=indexFilePath, media_type="text/html")

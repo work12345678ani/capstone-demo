@@ -42,7 +42,7 @@ export default function ChatPage() {
 
   const handleInitSubmit = async (name: string, desc: string) => {
     try {
-      const res = await fetch(`${API_BASE}/api/get-questions`, {
+      const res = await fetch(`/api/get-questions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -64,11 +64,11 @@ export default function ChatPage() {
 
   const handleConfirm = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/validate`, {
+      const res = await fetch(`/api/validate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ thread_id: threadId, is_valid: true, additional_info: ""}),
+        body: JSON.stringify({ thread_id: threadId, is_valid: true, additional_info: "" }),
       });
 
       if (!res.ok) throw new Error("Failed to validate");
@@ -102,7 +102,7 @@ export default function ChatPage() {
 
   const fetchProfile = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/me`, { credentials: "include" });
+      const res = await fetch(`/api/me`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed to fetch profile");
       const data = await res.json();
       setProfile(data);
@@ -114,7 +114,7 @@ export default function ChatPage() {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${API_BASE}/api/logout`, { method: "POST", credentials: "include" });
+      await fetch(`/api/logout`, { method: "POST", credentials: "include" });
       document.cookie = "session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       navigate("/login");
     } catch (err) {
@@ -136,13 +136,13 @@ export default function ChatPage() {
     }
 
     try {
-      const res = await fetch(`${API_BASE}/api/conversation`, {
+      const res = await fetch(`/api/conversation`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ 
-          message: isFirstMessage? `${initialChatData}\n\n${userMessage}` : userMessage, 
-          thread_id: threadId 
+        body: JSON.stringify({
+          message: isFirstMessage ? `${initialChatData}\n\n${userMessage}` : userMessage,
+          thread_id: threadId
         }),
       });
       setIsFirstMessage(false);
@@ -175,15 +175,15 @@ export default function ChatPage() {
   };
 
   useEffect(() => {
-  if (!initialized && initialChatData && step === "chat") {
-    // Add both the initial prompt and response to messages immediately
-    setMessages([
-      { role: "user", content: `Name: ${userInput.name}, Topic: ${userInput.topic}` },
-      { role: "assistant", content: initialChatData }
-    ]);
-    setInitialized(true);
-  }
-}, [initialized, initialChatData, step, userInput]);
+    if (!initialized && initialChatData && step === "chat") {
+      // Add both the initial prompt and response to messages immediately
+      setMessages([
+        { role: "user", content: `Name: ${userInput.name}, Topic: ${userInput.topic}` },
+        { role: "assistant", content: initialChatData }
+      ]);
+      setInitialized(true);
+    }
+  }, [initialized, initialChatData, step, userInput]);
 
 
   return (
@@ -201,13 +201,6 @@ export default function ChatPage() {
             )}
           </div>
           <div className="flex gap-2">
-            <button
-              onClick={() => setIsDark(!isDark)}
-              className="p-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
-              title="Toggle theme"
-            >
-              {isDark ? "☀️" : "🌙"}
-            </button>
             <button
               onClick={fetchProfile}
               className="p-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
@@ -252,6 +245,7 @@ export default function ChatPage() {
 function InitForm({ onSubmit }: { onSubmit: (name: string, topic: string) => void }) {
   const [name, setName] = useState("");
   const [topic, setTopic] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -280,10 +274,16 @@ function InitForm({ onSubmit }: { onSubmit: (name: string, topic: string) => voi
           />
         </div>
         <button
-          onClick={() => name.trim() && topic.trim() && onSubmit(name, topic)}
-          className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+          onClick={() => {
+            if (name.trim() && topic.trim()) {
+              setIsLoading(true);
+              onSubmit(name, topic);
+            }
+          }}
+          disabled={isLoading}
+          className={`w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-md ${isLoading ? "disabled:opacity-50 disabled:cursor-not-allowed" : ""}`}
         >
-          Continue
+          {isLoading ? "Loading..." : "Continue"}
         </button>
       </div>
     </div>
@@ -291,6 +291,7 @@ function InitForm({ onSubmit }: { onSubmit: (name: string, topic: string) => voi
 }
 
 function ConfirmPage({ interrupt, onConfirm, onCancel }: any) {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div className="max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">{interrupt.name}</h2>
@@ -298,8 +299,12 @@ function ConfirmPage({ interrupt, onConfirm, onCancel }: any) {
       <p className="mb-6 text-gray-600 dark:text-gray-400">Is this what you wanted?</p>
       <div className="flex gap-4">
         <button
-          onClick={onConfirm}
-          className="flex-1 py-2 px-4 bg-green-600 hover:bg-green-700 text-white rounded-md"
+          onClick={() => {
+            setIsLoading(true);
+            onConfirm();
+          }}
+          disabled={isLoading}
+          className={`flex-1 py-2 px-4 bg-green-600 hover:bg-green-700 text-white rounded-md ${isLoading ? "disabled:opacity-50 disabled:cursor-not-allowed" : ""}`}
         >
           Yes, continue
         </button>
@@ -321,11 +326,10 @@ function ChatInterface({ messages, input, setInput, loading, handleSubmit, downl
         {messages.map((msg: any, idx: number) => (
           <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
             <div
-              className={`max-w-3xl rounded-lg p-4 ${
-                msg.role === "user"
+              className={`max-w-3xl rounded-lg p-4 ${msg.role === "user"
                   ? "bg-blue-600 text-white"
                   : "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
-              }`}
+                }`}
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="whitespace-pre-wrap flex-1"><Markdown remarkPlugins={[remarkGfm, remarkParse, remarkRehype]} rehypePlugins={[rehypeStringify]}>{msg.content}</Markdown></div>

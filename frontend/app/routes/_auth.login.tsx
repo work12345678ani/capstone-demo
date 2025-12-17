@@ -18,7 +18,7 @@ export default function LoginPage() {
     const body = isLogin ? { email, password } : { username, email, password };
 
     try {
-      const res = await fetch(`${API_BASE}${endpoint}`, {
+      const res = await fetch(`${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
